@@ -9,6 +9,11 @@ updates:
         patterns: ["*"]
         # A CLI bump regenerates src/ and updates tree-sitter-ref in CI, so it gets its own PR.
         exclude-patterns: ["tree-sitter-cli"]
+    ignore:
+      # eslint-config-treesitter 1.0.2 supports ESLint 9 only: it imports an
+      # undeclared `globals` and depends on eslint-plugin-jsdoc ^50.
+      - dependency-name: eslint
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: cargo
     directory: /
