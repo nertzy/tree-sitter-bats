@@ -36,6 +36,11 @@ jobs:
   test:
     name: Test parser (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    env:
+      # parser-test-action runs `npm ci` to get tree-sitter-bash's grammar.js.
+      # Skip this package's install script, which builds the unused Node addon
+      # and fails on windows-latest, where node-gyp 11 rejects Visual Studio 2026.
+      npm_config_ignore_scripts: true
     strategy:
       fail-fast: false
       matrix:
@@ -53,3 +58,19 @@ jobs:
           test-rust: true
           test-python: true
           test-go: true
+
+  examples:
+    name: Parse example Bats suites
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: tree-sitter/setup-action/cli@faab9a23fa6195da0f1cf868219cc1e89f238d3d # v2
+        with:
+          # Keep in sync with the exact tree-sitter-cli version in package.json.
+          tree-sitter-ref: v0.27.0
+      - run: script/fetch-examples
+      - uses: tree-sitter/parse-action@f44ffa94f802024f27e821a72e6f2f3efc5dd521 # v4
+        with:
+          files: examples/**/*.bats
+          invalid-files-list: script/known-failures.txt

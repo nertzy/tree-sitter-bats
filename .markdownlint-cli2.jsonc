@@ -4,5 +4,5 @@
     // Changelog sections repeat "Added"/"Changed" under each release.
     "MD024": { "siblings_only": true }
   },
-  "ignores": ["node_modules/**", "target/**", "build/**", ".build/**", "tmp/**"]
+  "ignores": ["node_modules/**", "target/**", "build/**", ".build/**", "tmp/**", "examples/**"]
 }

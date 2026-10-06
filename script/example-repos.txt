@@ -1,0 +1,14 @@
+# Bats suites parsed in CI. Format: <directory> <GitHub repository> <commit>.
+# Bump a commit deliberately and regenerate script/known-failures.txt with
+# script/parse-examples.
+asdf asdf-vm/asdf cb72590e9f9691b6e651aecfe4b0c9334adff41b
+bats-assert bats-core/bats-assert 697471b7a89d3ab38571f38c6c7c4b460d1f5e35
+bats-core bats-core/bats-core 8c8ec0b1d552f279853b76b9d80b3b6fcb1d7a4d
+bats-detik bats-core/bats-detik 2ea9f37d5f54e69f4919b13ed736f48776b21cbb
+bats-file bats-core/bats-file 6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599
+bats-support bats-core/bats-support 0954abb9925cad550424cebca2b99255d4eabe96
+dokku dokku/dokku e2f4a00a3d7b8fa3ea9e5b37932400b4c8fe8527
+nodenv nodenv/nodenv 76e9ae5087c27ecd29c24e3b273741aa158b4564
+pyenv pyenv/pyenv f9d17bfc06ccbda37edd84df99a4f50d8d7d2a4a
+rbenv rbenv/rbenv 07e9b1e297a5977298c6aadc9971ae0e9eb7f0dc
+ruby-build rbenv/ruby-build db86e6ddd6d3b1d8715d005b65fab0c3f2804fdd

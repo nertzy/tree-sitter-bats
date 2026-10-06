@@ -17,6 +17,18 @@ npm run lint
 
 Edit `grammar.js`, never the generated `src/` files, and commit the regenerated `src/` alongside the grammar change. CI fails when the committed parser differs from a fresh `tree-sitter generate`. Add or update corpus tests in `test/corpus/` for every change in parsing behavior.
 
+### Example suites
+
+CI also parses the `.bats` files of the public Bats suites in `script/example-repos.txt`, each pinned to a commit, and accepts `ERROR` nodes only in the files listed in `script/known-failures.txt`. After a grammar change or a commit bump, regenerate the list and explain every added or removed file in the pull request:
+
+```sh
+script/parse-examples
+```
+
+### Updating tree-sitter-bash
+
+`grammar.js` extends the exact tree-sitter-bash version in `package.json`, and `src/scanner.c` is a copy of that version's external scanner with the exported function names changed from `bash` to `bats`. Bump both together: update the dependency, copy the new `src/scanner.c` with the same rename and header, regenerate, and run the corpus tests and `script/parse-examples`.
+
 Pull requests should explain the problem, the chosen behavior, and any user-visible documentation changes.
 
 ## Reporting bugs and proposing changes
