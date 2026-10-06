@@ -1,0 +1,64 @@
+{
+  "name": "tree-sitter-bats",
+  "version": "0.1.0",
+  "description": "Bats (Bash Automated Testing System) grammar for tree-sitter, extending tree-sitter-bash.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nertzy/tree-sitter-bats.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Grant Hutchins",
+    "email": "git@nertzy.com"
+  },
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "bats"
+  ],
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**",
+    "*.wasm"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "eslint-config-treesitter": "^1.0.2",
+    "markdownlint-cli2": "^0.23.3",
+    "prebuildify": "^6.0.1",
+    "tree-sitter": "^0.25.0",
+    "tree-sitter-cli": "0.27.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "node --test bindings/node/*_test.js",
+    "lint": "eslint grammar.js && markdownlint-cli2 '**/*.md'"
+  },
+  "allowScripts": {
+    "tree-sitter@0.25.1": true,
+    "tree-sitter-cli@0.27.0": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "grammars": [
+    {
+      "name": "bats",
+      "camelcase": "Bats",
+      "scope": "source.bats",
+      "path": ".",
+      "file-types": [
+        "bats"
+      ],
+      "injection-regex": "^bats$",
+      "first-line-regex": "^#!.*\\bbats\\b.*$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Bats (Bash Automated Testing System) grammar for tree-sitter, extending tree-sitter-bash.",
+    "authors": [
+      {
+        "name": "Grant Hutchins",
+        "email": "git@nertzy.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/nertzy/tree-sitter-bats"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
