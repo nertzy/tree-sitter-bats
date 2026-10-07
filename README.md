@@ -67,12 +67,14 @@ Bats test files are Bash scripts with extra syntax. This grammar parses them by 
 Worked around:
 
 - A `[ ... ]` test, later commands with a redirect, and a following `[ ... ]` merge into one `test_command` without an `ERROR` node ([tree-sitter-bash#316](https://github.com/tree-sitter/tree-sitter-bash/issues/316)). Here a redirect inside single brackets, as in `[ ! command -v go &>/dev/null ]`, must be a command with single-word redirect targets followed by `]`, and the separate-statements parse wins any remaining ambiguity.
+- A herestring after a file or heredoc redirect, as in `cat > file <<<"text"`, produces an `ERROR` ([tree-sitter-bash#232](https://github.com/tree-sitter/tree-sitter-bash/issues/232), [#282](https://github.com/tree-sitter/tree-sitter-bash/issues/282)). Here a herestring may follow the first file or heredoc redirect; a herestring before it still belongs to the command.
 
 Not yet worked around:
 
 - A line with a redirect after a pipeline of three or more commands merges into the pipeline's last command (same issue, [comment](https://github.com/tree-sitter/tree-sitter-bash/issues/316)).
-- A herestring after a file redirect, as in `cat > file <<<"text"`, produces an `ERROR` ([tree-sitter-bash#282](https://github.com/tree-sitter/tree-sitter-bash/issues/282)).
 - The read-write redirect `<>` produces an `ERROR` ([tree-sitter-bash#352](https://github.com/tree-sitter/tree-sitter-bash/issues/352)).
+- A quoted string containing a space inside a glob after `=` in `[[ ... ]]`, as in `[[ $output = *"a b"* ]]`, produces an `ERROR` ([tree-sitter-bash#321](https://github.com/tree-sitter/tree-sitter-bash/issues/321)); `==` parses.
+- A double-quoted string followed by a group in a `=~` regex, as in `[[ $output =~ "a "([^ ]+) ]]`, produces an `ERROR`.
 - An escaped backtick inside a quoted glob in `[[ ... ]]`, as in `` [[ $output = *"\`cmd\`"* ]] ``, produces an `ERROR`.
 - Bats also accepts a function marked as a test with a trailing comment (`name() { # @test`); it parses as an ordinary `function_definition`.
 

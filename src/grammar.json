@@ -272,22 +272,38 @@
                     "type": "CHOICE",
                     "members": [
                       {
-                        "type": "REPEAT1",
-                        "content": {
-                          "type": "CHOICE",
-                          "members": [
-                            {
-                              "type": "SYMBOL",
-                              "name": "file_redirect"
-                            },
-                            {
-                              "type": "SYMBOL",
-                              "name": "heredoc_redirect"
-                            }
-                          ]
-                        }
+                        "type": "SYMBOL",
+                        "name": "file_redirect"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "heredoc_redirect"
                       }
                     ]
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "redirect",
+                  "content": {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "file_redirect"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "heredoc_redirect"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "herestring_redirect"
+                        }
+                      ]
+                    }
                   }
                 }
               ]

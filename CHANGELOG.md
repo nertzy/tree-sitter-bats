@@ -13,3 +13,4 @@ Notable changes to `tree-sitter-bats` are documented here.
 ### Fixed
 
 - Fixed `[ ... ]` tests merging with later redirected commands and a following `[ ... ]` into one `test_command` ([tree-sitter-bash#316](https://github.com/tree-sitter/tree-sitter-bash/issues/316)).
+- Fixed herestrings after a file or heredoc redirect, as in `cat > file <<<"text"`, producing an `ERROR` ([tree-sitter-bash#232](https://github.com/tree-sitter/tree-sitter-bash/issues/232)).

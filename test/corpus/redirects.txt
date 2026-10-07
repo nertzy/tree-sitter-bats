@@ -1,0 +1,49 @@
+================================================================================
+Herestring after a file redirect
+================================================================================
+
+rev > output <<< hello
+cat >".tool-versions" <<<$'nodejs 19.6.0\r'
+nc -l 2>/dev/null <<<"$response" &
+rev <<< hello > output
+
+--------------------------------------------------------------------------------
+
+(program
+  (redirected_statement
+    (command
+      (command_name
+        (word)))
+    (file_redirect
+      (word))
+    (herestring_redirect
+      (word)))
+  (redirected_statement
+    (command
+      (command_name
+        (word)))
+    (file_redirect
+      (string
+        (string_content)))
+    (herestring_redirect
+      (ansi_c_string)))
+  (redirected_statement
+    (command
+      (command_name
+        (word))
+      (word))
+    (file_redirect
+      (file_descriptor)
+      (word))
+    (herestring_redirect
+      (string
+        (simple_expansion
+          (variable_name)))))
+  (redirected_statement
+    (command
+      (command_name
+        (word))
+      (herestring_redirect
+        (word)))
+    (file_redirect
+      (word))))
