@@ -26,6 +26,43 @@ export default grammar(bash, {
       field('body', alias($._test_body, $.compound_statement)),
     ),
 
+    // `name() { # @test`, which Bats also runs as a test. Bats only reads the
+    // marker on the line that opens the function, after at least one blank.
+    function_definition: $ => prec.right(seq(
+      choice(
+        seq(
+          'function',
+          field('name', $.word),
+          optional(seq('(', ')')),
+        ),
+        seq(
+          field('name', $.word),
+          '(', ')',
+        ),
+      ),
+      field(
+        'body',
+        choice(
+          $.compound_statement,
+          alias($._test_function_body, $.compound_statement),
+          $.subshell,
+          $.test_command,
+          $.if_statement,
+        ),
+      ),
+      field('redirect', optional($._redirect)),
+    )),
+
+    _test_function_body: $ => seq(
+      '{',
+      alias(
+        token.immediate(prec(1, /[ \t]+#[ \t]*@test[ \t]*\r?\n/)),
+        $.test_marker,
+      ),
+      optional($._terminated_statement),
+      token(prec(-1, '}')),
+    ),
+
     _test_body: $ => seq(
       '{',
       optional($._terminated_statement),
