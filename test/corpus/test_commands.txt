@@ -1,0 +1,269 @@
+================================================================================
+Test commands around a redirected command
+================================================================================
+
+[ 1 -eq 1 ]
+echo hi > /dev/null
+[ 2 -eq 2 ]
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_command
+    (binary_expression
+      (number)
+      (test_operator)
+      (number)))
+  (redirected_statement
+    (command
+      (command_name
+        (word))
+      (word))
+    (file_redirect
+      (word)))
+  (test_command
+    (binary_expression
+      (number)
+      (test_operator)
+      (number))))
+
+================================================================================
+Test commands around a redirected command in a test block
+================================================================================
+
+@test "separate statements" {
+  [ "$status" -eq 0 ]
+  echo "$output" >&2
+  [ "$output" = "ok" ]
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_block
+    (string
+      (string_content))
+    (compound_statement
+      (test_command
+        (binary_expression
+          (string
+            (simple_expansion
+              (variable_name)))
+          (test_operator)
+          (number)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (string
+            (simple_expansion
+              (variable_name))))
+        (file_redirect
+          (number)))
+      (test_command
+        (binary_expression
+          (string
+            (simple_expansion
+              (variable_name)))
+          (string
+            (string_content)))))))
+
+================================================================================
+Redirect inside test brackets
+================================================================================
+
+[ "$a" > "$b" ]
+[ ! command -v go &>/dev/null ] && return
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_command
+    (binary_expression
+      (string
+        (simple_expansion
+          (variable_name)))
+      (string
+        (simple_expansion
+          (variable_name)))))
+  (list
+    (test_command
+      (redirected_statement
+        (negated_command
+          (command
+            (command_name
+              (word))
+            (word)
+            (word)))
+        (file_redirect
+          (word))))
+    (command
+      (command_name
+        (word)))))
+
+================================================================================
+Test commands separated by many redirected commands
+================================================================================
+
+@test "first" {
+  [ "$status" -eq 0 ]
+}
+
+@test "second" {
+  echo 0 >> out
+  echo 1 >> out
+  echo 2 >> out
+  echo 3 >> out
+  echo 4 >> out
+  echo 5 >> out
+  echo 6 >> out
+  echo 7 >> out
+  echo 8 >> out
+  echo 9 >> out
+  echo 10 >> out
+  echo 11 >> out
+  [ "$(wc -l < out)" -eq 12 ]
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_block
+    (string
+      (string_content))
+    (compound_statement
+      (test_command
+        (binary_expression
+          (string
+            (simple_expansion
+              (variable_name)))
+          (test_operator)
+          (number)))))
+  (test_block
+    (string
+      (string_content))
+    (compound_statement
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (redirected_statement
+        (command
+          (command_name
+            (word))
+          (number))
+        (file_redirect
+          (word)))
+      (test_command
+        (binary_expression
+          (string
+            (command_substitution
+              (redirected_statement
+                (command
+                  (command_name
+                    (word))
+                  (word))
+                (file_redirect
+                  (word)))))
+          (test_operator)
+          (number))))))
+
+================================================================================
+Test command before a test command with a redirect
+================================================================================
+
+[ -n "$x" ]
+[ ! command -v go &>/dev/null ]
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_command
+    (unary_expression
+      (test_operator)
+      (string
+        (simple_expansion
+          (variable_name)))))
+  (test_command
+    (redirected_statement
+      (negated_command
+        (command
+          (command_name
+            (word))
+          (word)
+          (word)))
+      (file_redirect
+        (word)))))

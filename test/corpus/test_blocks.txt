@@ -1,0 +1,226 @@
+================================================================================
+Double-quoted test name
+================================================================================
+
+@test "addition using bc" {
+  result="$(echo 2+2 | bc)"
+  [ "$result" -eq 4 ]
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_block
+    (string
+      (string_content))
+    (compound_statement
+      (variable_assignment
+        (variable_name)
+        (string
+          (command_substitution
+            (pipeline
+              (command
+                (command_name
+                  (word))
+                (word))
+              (command
+                (command_name
+                  (word)))))))
+      (test_command
+        (binary_expression
+          (string
+            (simple_expansion
+              (variable_name)))
+          (test_operator)
+          (number))))))
+
+================================================================================
+Single-quoted test name
+================================================================================
+
+@test 'addition using dc' {
+  run dc -e '2 2 + p'
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_block
+    (raw_string)
+    (compound_statement
+      (command
+        (command_name
+          (word))
+        (word)
+        (word)
+        (raw_string)))))
+
+================================================================================
+Unquoted test name
+================================================================================
+
+@test addition using expr {
+  run expr 2 + 2
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_block
+    (word)
+    (word)
+    (word)
+    (compound_statement
+      (command
+        (command_name
+          (word))
+        (word)
+        (number)
+        (word)
+        (number)))))
+
+================================================================================
+Test name with an expansion
+================================================================================
+
+@test "uses $BATS_TEST_DIRNAME" {
+  true
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_block
+    (string
+      (string_content)
+      (simple_expansion
+        (variable_name)))
+    (compound_statement
+      (command
+        (command_name
+          (word))))))
+
+================================================================================
+One-line test
+================================================================================
+
+@test "one line" { true; }
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_block
+    (string
+      (string_content))
+    (compound_statement
+      (command
+        (command_name
+          (word))))))
+
+================================================================================
+Empty test
+================================================================================
+
+@test "empty" {
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (test_block
+    (string
+      (string_content))
+    (compound_statement)))
+
+================================================================================
+Tests among setup, helpers, and tag comments
+================================================================================
+
+#!/usr/bin/env bats
+# bats file_tags=slow
+bats_require_minimum_version 1.5.0
+load test_helper
+
+setup() {
+  cd "$BATS_TEST_TMPDIR"
+}
+
+# bats test_tags=fast
+@test "first" {
+  run ! false
+}
+
+@test "second" {
+  run -1 false
+}
+
+teardown() {
+  rm -f out
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (comment)
+  (comment)
+  (command
+    (command_name
+      (word))
+    (word))
+  (command
+    (command_name
+      (word))
+    (word))
+  (function_definition
+    (word)
+    (compound_statement
+      (command
+        (command_name
+          (word))
+        (string
+          (simple_expansion
+            (variable_name))))))
+  (comment)
+  (test_block
+    (string
+      (string_content))
+    (compound_statement
+      (command
+        (command_name
+          (word))
+        (word)
+        (word))))
+  (test_block
+    (string
+      (string_content))
+    (compound_statement
+      (command
+        (command_name
+          (word))
+        (number)
+        (word))))
+  (function_definition
+    (word)
+    (compound_statement
+      (command
+        (command_name
+          (word))
+        (word)
+        (word)))))
+
+================================================================================
+@test as an argument stays a word
+================================================================================
+
+echo @test "name" {
+
+--------------------------------------------------------------------------------
+
+(program
+  (command
+    (command_name
+      (word))
+    (word)
+    (string
+      (string_content))
+    (word)))

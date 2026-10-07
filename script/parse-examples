@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Parse every example .bats file and rewrite script/known-failures.txt with the
+# files that still produce ERROR or MISSING nodes.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+script/fetch-examples
+scratch=$(mktemp -d)
+trap 'rm -rf "$scratch"' EXIT
+find examples -name '*.bats' -type f | LC_ALL=C sort > "$scratch/files.txt"
+tree-sitter parse -p . -q -s --paths "$scratch/files.txt" > "$scratch/parse.txt" || true
+grep -q '^Total parses' "$scratch/parse.txt" || { cat "$scratch/parse.txt" >&2; exit 1; }
+awk '/ERROR|MISSING/ { print $1 }' "$scratch/parse.txt" | LC_ALL=C sort > script/known-failures.txt
+grep '^Total parses' "$scratch/parse.txt"
