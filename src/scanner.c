@@ -1,6 +1,7 @@
 // Copied from tree-sitter-bash 0.25.1 (src/scanner.c), MIT License,
-// Copyright (c) 2017 Max Brunsfeld. Only the exported function names differ;
-// keep it in sync with the tree-sitter-bash version in package.json.
+// Copyright (c) 2017 Max Brunsfeld. Besides the exported function names, it
+// differs only by TEST_MARKER_COMMENT_START and scan_test_marker_comment_start;
+// keep the rest in sync with the tree-sitter-bash version in package.json.
 
 #include "tree_sitter/array.h"
 #include "tree_sitter/parser.h"
@@ -40,6 +41,7 @@ enum TokenType {
     OPENING_PAREN,
     ESAC,
     ERROR_RECOVERY,
+    TEST_MARKER_COMMENT_START,
 };
 
 typedef Array(char) String;
@@ -350,7 +352,47 @@ static bool scan_heredoc_content(Scanner *scanner, TSLexer *lexer, enum TokenTyp
     }
 }
 
+static inline bool is_blank(int32_t c) { return c == ' ' || c == '\t'; }
+
+// After the `{` that opens a function, match the `#` and blanks of a
+// `# @test` comment that ends the line, which Bats reads as a test marker. The
+// token stops before `@test`; reading on to the newline only checks the line.
+static bool scan_test_marker_comment_start(TSLexer *lexer) {
+    advance(lexer);
+    while (is_blank(lexer->lookahead)) {
+        advance(lexer);
+    }
+    lexer->mark_end(lexer);
+    for (const char *c = "@test"; *c; c++) {
+        if (lexer->lookahead != *c) {
+            return false;
+        }
+        advance(lexer);
+    }
+    while (is_blank(lexer->lookahead)) {
+        advance(lexer);
+    }
+    if (lexer->lookahead == '\r') {
+        advance(lexer);
+    }
+    if (lexer->lookahead != '\n') {
+        return false;
+    }
+    lexer->result_symbol = TEST_MARKER_COMMENT_START;
+    return true;
+}
+
 static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
+    // Bats needs at least one blank between the `{` and the `#`.
+    if (valid_symbols[TEST_MARKER_COMMENT_START] && !in_error_recovery(valid_symbols) && is_blank(lexer->lookahead)) {
+        while (is_blank(lexer->lookahead)) {
+            skip(lexer);
+        }
+        if (lexer->lookahead == '#') {
+            return scan_test_marker_comment_start(lexer);
+        }
+    }
+
     if (valid_symbols[CONCAT] && !in_error_recovery(valid_symbols)) {
         if (!(lexer->lookahead == 0 || iswspace(lexer->lookahead) || lexer->lookahead == '>' ||
               lexer->lookahead == '<' || lexer->lookahead == ')' || lexer->lookahead == '(' ||

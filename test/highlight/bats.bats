@@ -18,6 +18,7 @@ teardown_file() { :; }
 
 marked() { # @test
 # <- function
+#          ^ comment
 #            ^ keyword
   true
 }

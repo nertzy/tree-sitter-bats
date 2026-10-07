@@ -1258,7 +1258,7 @@
           "named": true
         },
         {
-          "type": "test_marker",
+          "type": "test_marker_comment",
           "named": true
         },
         {
@@ -3585,6 +3585,11 @@
     }
   },
   {
+    "type": "test_marker_comment",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "translated_string",
     "named": true,
     "fields": {},
@@ -4435,10 +4440,6 @@
   },
   {
     "type": "string_content",
-    "named": true
-  },
-  {
-    "type": "test_marker",
     "named": true
   },
   {

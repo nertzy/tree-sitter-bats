@@ -12,6 +12,10 @@ import bash from 'tree-sitter-bash/grammar.js';
 export default grammar(bash, {
   name: 'bats',
 
+  // The scanner recognizes the start of a test marker comment, which needs to
+  // see the rest of its line.
+  externals: ($, original) => original.concat($._test_marker_comment_start),
+
   rules: {
     _statement_not_subshell: ($, original) => choice(
       $.test_block,
@@ -55,13 +59,13 @@ export default grammar(bash, {
 
     _test_function_body: $ => seq(
       '{',
-      alias(
-        token.immediate(prec(1, /[ \t]+#[ \t]*@test[ \t]*\r?\n/)),
-        $.test_marker,
-      ),
+      $.test_marker_comment,
       optional($._terminated_statement),
       token(prec(-1, '}')),
     ),
+
+    // The `#` and blanks come from the scanner, so `@test` is its own token.
+    test_marker_comment: $ => seq($._test_marker_comment_start, '@test'),
 
     _test_body: $ => seq(
       '{',

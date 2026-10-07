@@ -12,7 +12,7 @@ marked() { # @test
   (function_definition
     (word)
     (compound_statement
-      (test_marker)
+      (test_marker_comment)
       (command
         (command_name
           (word))))))
@@ -31,7 +31,7 @@ function marked { #@test
   (function_definition
     (word)
     (compound_statement
-      (test_marker)
+      (test_marker_comment)
       (command
         (command_name
           (word))))))
@@ -135,3 +135,22 @@ helper() { true; }
     (command
       (command_name
         (word)))))
+
+================================================================================
+Test disabled by commenting out its @test line
+================================================================================
+
+disabled() { # @test "Testname" {
+  true
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_definition
+    (word)
+    (compound_statement
+      (comment)
+      (command
+        (command_name
+          (word))))))
