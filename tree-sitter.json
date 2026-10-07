@@ -9,7 +9,8 @@
         "bats"
       ],
       "injection-regex": "^bats$",
-      "first-line-regex": "^#!.*\\bbats\\b.*$"
+      "first-line-regex": "^#!.*\\bbats\\b.*$",
+      "highlights": "queries/highlights.scm"
     }
   ],
   "metadata": {

@@ -60,6 +60,12 @@ ast-grep run --lang bats --pattern '@test $NAME { $$$BODY; }'
 ast-grep scan --inline-rules '{ id: test-names, language: bats, rule: { kind: test_block } }'
 ```
 
+## Highlighting
+
+`queries/highlights.scm` covers the Bash constructs plus Bats syntax: `@test`, test names, the `setup` and `teardown` hooks, helpers such as `run`, `load`, and `skip`, and the variables Bats sets (`$status`, `$output`, `$lines`, `$stderr`, `$stderr_lines`, and `$BATS_*`). `tree-sitter.json` points editors and `tree-sitter highlight` at it.
+
+No two patterns capture the same node, so editors that prefer the first matching pattern (tree-sitter-highlight) and those that prefer the last (Zed) highlight the same way. The Rust binding test enforces this on `test/highlight/` and, once `script/fetch-examples` has fetched them, on the example suites; CI runs it on both. `tree-sitter test` runs the assertions in `test/highlight/`.
+
 ## Scope and limitations
 
 Bats test files are Bash scripts with extra syntax. This grammar parses them by extending tree-sitter-bash 0.25.1, so anything tree-sitter-bash misparses is misparsed here too unless this grammar works around it.

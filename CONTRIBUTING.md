@@ -17,6 +17,10 @@ npm run lint
 
 Edit `grammar.js`, never the generated `src/` files, and commit the regenerated `src/` alongside the grammar change. CI fails when the committed parser differs from a fresh `tree-sitter generate`. Add or update corpus tests in `test/corpus/` for every change in parsing behavior.
 
+### Highlight queries
+
+`queries/highlights.scm` gets assertions in `test/highlight/`, which `tree-sitter test` runs. Keep every node to one capture: when two patterns share a node type, split it with complementary predicates (`#match?` and `#not-match?` on the same regex). `cargo test` fails on any node captured twice, in `test/highlight/` and, after `script/fetch-examples`, in the example suites.
+
 ### Example suites
 
 CI also parses the `.bats` files of the public Bats suites in `script/example-repos.txt`, each pinned to a commit, and accepts `ERROR` nodes only in the files listed in `script/known-failures.txt`. After a grammar change or a commit bump, regenerate the list and explain every added or removed file in the pull request:
