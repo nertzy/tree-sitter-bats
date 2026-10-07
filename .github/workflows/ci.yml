@@ -70,6 +70,8 @@ jobs:
           # Keep in sync with the exact tree-sitter-cli version in package.json.
           tree-sitter-ref: v0.27.0
       - run: script/fetch-examples
+      # The Rust binding test checks highlight captures on the fetched suites.
+      - run: cargo test test_highlights_capture_each_node_once
       - uses: tree-sitter/parse-action@f44ffa94f802024f27e821a72e6f2f3efc5dd521 # v4
         with:
           files: examples/**/*.bats
