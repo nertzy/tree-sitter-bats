@@ -78,6 +78,9 @@ Worked around:
 Not yet worked around:
 
 - A line with a redirect after a pipeline of three or more commands merges into the pipeline's last command (same issue, [comment](https://github.com/tree-sitter/tree-sitter-bash/issues/316)).
+- A heredoc whose line continues past the opener with `;`, `&`, or more than one further statement, as in `cat <<EOF; echo next` or `cat <<EOF | grep x; echo y`, produces an `ERROR`. Proposed fixes: [tree-sitter-bash#355](https://github.com/tree-sitter/tree-sitter-bash/pull/355) and [#356](https://github.com/tree-sitter/tree-sitter-bash/pull/356).
+- More than one heredoc opened on a line, as in `cat <<A <<B` or `cat <<A; cat <<B`, produces an `ERROR`.
+- An argument after a herestring that follows a file redirect, as in `cat > out <<< x -`, produces an `ERROR`.
 - The read-write redirect `<>` produces an `ERROR` ([tree-sitter-bash#352](https://github.com/tree-sitter/tree-sitter-bash/issues/352)).
 - A quoted string containing a space inside a glob after `=` in `[[ ... ]]`, as in `[[ $output = *"a b"* ]]`, produces an `ERROR` ([tree-sitter-bash#321](https://github.com/tree-sitter/tree-sitter-bash/issues/321)); `==` parses.
 - A double-quoted string followed by a group in a `=~` regex, as in `[[ $output =~ "a "([^ ]+) ]]`, produces an `ERROR`.
