@@ -39,6 +39,29 @@ export default grammar(bash, {
     // `[ ... ]` as one test_command, without an ERROR. Narrow the branch to a
     // command with single-destination file redirects closed by `]`, and
     // penalize it so separate statements win any remaining tie.
+    // tree-sitter-bash only accepts a herestring before a statement's file
+    // and heredoc redirects, so `cat > file <<< text` produces an ERROR
+    // (tree-sitter-bash#232). Accept herestrings anywhere after the first
+    // file or heredoc redirect; a herestring before them still belongs to
+    // the command.
+    redirected_statement: $ => prec.dynamic(-1, prec.right(-1, choice(
+      seq(
+        field('body', $._statement),
+        field('redirect', choice($.file_redirect, $.heredoc_redirect)),
+        field('redirect', repeat(choice(
+          $.file_redirect,
+          $.heredoc_redirect,
+          $.herestring_redirect,
+        ))),
+      ),
+      seq(
+        field('body', choice($.if_statement, $.while_statement)),
+        $.herestring_redirect,
+      ),
+      field('redirect', repeat1($._redirect)),
+      $.herestring_redirect,
+    ))),
+
     test_command: $ => choice(
       seq('[', optional($._expression), ']'),
       prec.dynamic(-10, seq(
