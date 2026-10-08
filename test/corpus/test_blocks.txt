@@ -11,8 +11,9 @@ Double-quoted test name
 
 (program
   (test_block
-    (string
-      (string_content))
+    (test_name
+      (string
+        (string_content)))
     (compound_statement
       (variable_assignment
         (variable_name)
@@ -46,7 +47,8 @@ Single-quoted test name
 
 (program
   (test_block
-    (raw_string)
+    (test_name
+      (raw_string))
     (compound_statement
       (command
         (command_name
@@ -67,9 +69,10 @@ Unquoted test name
 
 (program
   (test_block
-    (word)
-    (word)
-    (word)
+    (test_name
+      (word)
+      (word)
+      (word))
     (compound_statement
       (command
         (command_name
@@ -91,10 +94,11 @@ Test name with an expansion
 
 (program
   (test_block
-    (string
-      (string_content)
-      (simple_expansion
-        (variable_name)))
+    (test_name
+      (string
+        (string_content)
+        (simple_expansion
+          (variable_name))))
     (compound_statement
       (command
         (command_name
@@ -110,8 +114,9 @@ One-line test
 
 (program
   (test_block
-    (string
-      (string_content))
+    (test_name
+      (string
+        (string_content)))
     (compound_statement
       (command
         (command_name
@@ -128,8 +133,9 @@ Empty test
 
 (program
   (test_block
-    (string
-      (string_content))
+    (test_name
+      (string
+        (string_content)))
     (compound_statement)))
 
 ================================================================================
@@ -182,8 +188,9 @@ teardown() {
             (variable_name))))))
   (comment)
   (test_block
-    (string
-      (string_content))
+    (test_name
+      (string
+        (string_content)))
     (compound_statement
       (command
         (command_name
@@ -191,8 +198,9 @@ teardown() {
         (word)
         (word))))
   (test_block
-    (string
-      (string_content))
+    (test_name
+      (string
+        (string_content)))
     (compound_statement
       (command
         (command_name

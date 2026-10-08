@@ -7018,11 +7018,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "REPEAT1",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_literal"
-            }
+            "type": "SYMBOL",
+            "name": "test_name"
           }
         },
         {
@@ -7039,6 +7036,13 @@
           }
         }
       ]
+    },
+    "test_name": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_literal"
+      }
     },
     "_test_function_body": {
       "type": "SEQ",

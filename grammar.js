@@ -23,12 +23,15 @@ export default grammar(bash, {
     ),
 
     // `@test <name> { ... }`, which Bats rewrites into a test function.
-    // Like Bats, the name may be quoted or a run of unquoted words.
     test_block: $ => seq(
       '@test',
-      field('name', repeat1($._literal)),
+      field('name', $.test_name),
       field('body', alias($._test_body, $.compound_statement)),
     ),
+
+    // Like Bats, the name may be quoted or a run of unquoted words; Bats
+    // reads it from all the text between `@test` and `{`.
+    test_name: $ => repeat1($._literal),
 
     // `name() { # @test`, which Bats also runs as a test. Bats only reads the
     // marker on the line that opens the function, after at least one blank.

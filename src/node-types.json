@@ -3506,59 +3506,11 @@
         ]
       },
       "name": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "ansi_c_string",
-            "named": true
-          },
-          {
-            "type": "arithmetic_expansion",
-            "named": true
-          },
-          {
-            "type": "brace_expression",
-            "named": true
-          },
-          {
-            "type": "command_substitution",
-            "named": true
-          },
-          {
-            "type": "concatenation",
-            "named": true
-          },
-          {
-            "type": "expansion",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "process_substitution",
-            "named": true
-          },
-          {
-            "type": "raw_string",
-            "named": true
-          },
-          {
-            "type": "simple_expansion",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "translated_string",
-            "named": true
-          },
-          {
-            "type": "word",
+            "type": "test_name",
             "named": true
           }
         ]
@@ -3588,6 +3540,69 @@
     "type": "test_marker_comment",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "test_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "ansi_c_string",
+          "named": true
+        },
+        {
+          "type": "arithmetic_expansion",
+          "named": true
+        },
+        {
+          "type": "brace_expression",
+          "named": true
+        },
+        {
+          "type": "command_substitution",
+          "named": true
+        },
+        {
+          "type": "concatenation",
+          "named": true
+        },
+        {
+          "type": "expansion",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "process_substitution",
+          "named": true
+        },
+        {
+          "type": "raw_string",
+          "named": true
+        },
+        {
+          "type": "simple_expansion",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "translated_string",
+          "named": true
+        },
+        {
+          "type": "word",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "translated_string",
