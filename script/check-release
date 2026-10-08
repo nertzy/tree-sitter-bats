@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Print the package version after checking that every manifest agrees on it.
+# In a tag build (GITHUB_REF_TYPE=tag), also require a v<version> tag on a
+# commit in origin/main and a nonempty CHANGELOG.md section for the version.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+version=$(jq -r .version package.json)
+
+expect() {
+  if [[ "$2" != "$version" ]]; then
+    echo "$1 has version '$2', but package.json has '$version'" >&2
+    exit 1
+  fi
+}
+
+first_toml_version() {
+  awk -F'"' '/^version = "/ { print $2; exit }' "$1"
+}
+
+expect package-lock.json "$(jq -r .version package-lock.json)"
+expect 'package-lock.json packages[""]' "$(jq -r '.packages[""].version' package-lock.json)"
+expect tree-sitter.json "$(jq -r .metadata.version tree-sitter.json)"
+expect Cargo.toml "$(first_toml_version Cargo.toml)"
+expect Cargo.lock "$(awk -F'"' '/^name = "tree-sitter-bats"$/ { getline; print $2; exit }' Cargo.lock)"
+expect pyproject.toml "$(first_toml_version pyproject.toml)"
+expect Makefile "$(sed -n 's/^VERSION := //p' Makefile)"
+expect CMakeLists.txt "$(sed -n 's/^ *VERSION "\(.*\)"$/\1/p' CMakeLists.txt)"
+
+if [[ "${GITHUB_REF_TYPE:-}" == tag ]]; then
+  if [[ "$GITHUB_REF_NAME" != "v$version" ]]; then
+    echo "Tag $GITHUB_REF_NAME does not match package version $version" >&2
+    exit 1
+  fi
+  if ! git merge-base --is-ancestor HEAD origin/main; then
+    echo "Tag $GITHUB_REF_NAME is not on origin/main" >&2
+    exit 1
+  fi
+  script/release-notes "$version" > /dev/null
+fi
+
+echo "$version"

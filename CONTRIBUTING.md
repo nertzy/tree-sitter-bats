@@ -35,6 +35,10 @@ script/parse-examples
 
 Pull requests should explain the problem, the chosen behavior, and any user-visible documentation changes.
 
+## Releasing
+
+See [RELEASING.md](RELEASING.md).
+
 ## Reporting bugs and proposing changes
 
 Use [GitHub issues](https://github.com/nertzy/tree-sitter-bats/issues) for reproducible bugs and focused proposals. Include the smallest Bats snippet that misparses, the `tree-sitter parse` output, and the tree you expected. For vulnerabilities, follow [SECURITY.md](SECURITY.md) instead of opening a public issue.
