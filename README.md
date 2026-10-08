@@ -20,7 +20,7 @@ tree-sitter build --output bats.dylib # bats.so on Linux
 
 ## Parse Bats files
 
-Every Bash construct parses as it does in tree-sitter-bash. Bats test definitions become `test_block` nodes with a `name` field (a `string`, a `raw_string`, or the unquoted words) and a `body` field (a `compound_statement`). This test
+Every Bash construct parses as it does in tree-sitter-bash. Bats test definitions become `test_block` nodes with a `name` field and a `body` field (a `compound_statement`). The name is a `test_name` node spanning everything between `@test` and `{`, as Bats reads it, so it holds a `string`, a `raw_string`, or the words of an unquoted name. This test
 
 ```bats
 @test "addition using bc" {
@@ -34,7 +34,7 @@ parses as (abbreviated):
 ```text
 (program
   (test_block
-    name: (string (string_content))
+    name: (test_name (string (string_content)))
     body: (compound_statement
       (variable_assignment ...)
       (test_command ...))))
@@ -87,7 +87,6 @@ Not yet worked around:
 - A quoted string containing a space inside a glob after `=` in `[[ ... ]]`, as in `[[ $output = *"a b"* ]]`, produces an `ERROR` ([tree-sitter-bash#321](https://github.com/tree-sitter/tree-sitter-bash/issues/321)); `==` parses.
 - A double-quoted string followed by a group in a `=~` regex, as in `[[ $output =~ "a "([^ ]+) ]]`, produces an `ERROR`.
 - An escaped backtick inside a quoted glob in `[[ ... ]]`, as in `` [[ $output = *"\`cmd\`"* ]] ``, produces an `ERROR`.
-- Bats also accepts a function marked as a test with a trailing comment (`name() { # @test`); it parses as an ordinary `function_definition`.
 
 CI parses the `.bats` files of several public Bats suites at pinned commits. `script/known-failures.txt` lists the files that still produce `ERROR` nodes; each traces to one of the limitations above or to a deliberately malformed fixture.
 

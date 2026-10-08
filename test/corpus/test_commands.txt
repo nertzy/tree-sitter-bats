@@ -41,8 +41,9 @@ Test commands around a redirected command in a test block
 
 (program
   (test_block
-    (string
-      (string_content))
+    (test_name
+      (string
+        (string_content)))
     (compound_statement
       (test_command
         (binary_expression
@@ -129,8 +130,9 @@ Test commands separated by many redirected commands
 
 (program
   (test_block
-    (string
-      (string_content))
+    (test_name
+      (string
+        (string_content)))
     (compound_statement
       (test_command
         (binary_expression
@@ -140,8 +142,9 @@ Test commands separated by many redirected commands
           (test_operator)
           (number)))))
   (test_block
-    (string
-      (string_content))
+    (test_name
+      (string
+        (string_content)))
     (compound_statement
       (redirected_statement
         (command
