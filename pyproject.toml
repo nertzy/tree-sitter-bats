@@ -27,3 +27,5 @@ core = [ "tree-sitter~=0.24" ]
 [tool.cibuildwheel]
 build = "cp310-*"
 build-frontend = "build"
+test-requires = [ "tree-sitter~=0.24" ]
+test-command = "python -m unittest discover --start-directory {project}/bindings/python/tests"

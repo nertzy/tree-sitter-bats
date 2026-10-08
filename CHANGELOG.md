@@ -10,6 +10,7 @@ Notable changes to `tree-sitter-bats` are documented here.
 - Added `test_block` nodes for Bats `@test` definitions, with `name` (a `test_name`) and `body` fields, by extending tree-sitter-bash 0.25.1.
 - Added CI that parses the `.bats` files of public Bats suites, with known failures listed in `script/known-failures.txt`.
 - Added `test_marker_comment` nodes for the `# @test` comment that makes Bats run a function as a test, as in `name() { # @test`.
+- Added a tag-triggered release workflow that publishes to npm, crates.io, and PyPI through trusted publishing and creates the GitHub Release; see `RELEASING.md`.
 - Added `queries/highlights.scm` for Bash and Bats syntax, with highlight tests and a check that no node gets two highlight captures.
 
 ### Fixed
