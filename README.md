@@ -6,14 +6,22 @@
 
 ## Status
 
-Early development. Node types may change before the first release.
+Early development. Until 1.0, a minor release may change node types; [CHANGELOG.md](CHANGELOG.md) notes each change.
 
 ## Install
 
-No packages are published to npm, crates.io, or PyPI yet. Build from source at a pinned commit:
+```sh
+npm install tree-sitter-bats tree-sitter # Node.js
+cargo add tree-sitter-bats tree-sitter   # Rust
+pip install tree-sitter-bats tree-sitter # Python
+```
+
+Go and Swift users depend on a release tag, such as `v0.1.0`. Each [GitHub Release](https://github.com/nertzy/tree-sitter-bats/releases) attaches a Wasm build, `tree-sitter-bats.wasm`.
+
+Tools that load a compiled grammar, such as ast-grep, need a build from source:
 
 ```sh
-git clone https://github.com/nertzy/tree-sitter-bats
+git clone --branch v0.1.0 https://github.com/nertzy/tree-sitter-bats
 cd tree-sitter-bats
 tree-sitter build --output bats.dylib # bats.so on Linux
 ```
