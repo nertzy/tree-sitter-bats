@@ -40,6 +40,8 @@ parses as (abbreviated):
       (test_command ...))))
 ```
 
+Bats also runs a function as a test when a `# @test` comment ends the line that opens its body, as in `name() { # @test`. That comment becomes a `test_marker_comment` node, the first child of the function's `compound_statement`, instead of a `comment`. Its `@test` is a separate anonymous `"@test"` token, the same one a `test_block` starts with, so highlights can color it as a keyword. A `# @test` anywhere else stays a `comment`, since Bats ignores it.
+
 `setup`, `teardown`, `setup_file`, and `teardown_file` are ordinary `function_definition` nodes, and `run`, `load`, and `bats_require_minimum_version` are ordinary `command` nodes.
 
 ### With ast-grep

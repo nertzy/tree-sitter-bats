@@ -1,0 +1,156 @@
+================================================================================
+Function marked as a test
+================================================================================
+
+marked() { # @test
+  true
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_definition
+    (word)
+    (compound_statement
+      (test_marker_comment)
+      (command
+        (command_name
+          (word))))))
+
+================================================================================
+Function keyword marked as a test
+================================================================================
+
+function marked { #@test	
+  true
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_definition
+    (word)
+    (compound_statement
+      (test_marker_comment)
+      (command
+        (command_name
+          (word))))))
+
+================================================================================
+Marker followed by more text stays a comment
+================================================================================
+
+helper() { # @test needs a fixture
+  true
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_definition
+    (word)
+    (compound_statement
+      (comment)
+      (command
+        (command_name
+          (word))))))
+
+================================================================================
+Marker without a blank after the brace stays a comment
+================================================================================
+
+marked() {# @test
+  true
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_definition
+    (word)
+    (compound_statement
+      (comment)
+      (command
+        (command_name
+          (word))))))
+
+================================================================================
+Marker on the next line stays a comment
+================================================================================
+
+helper() {
+  # @test
+  true
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_definition
+    (word)
+    (compound_statement
+      (comment)
+      (command
+        (command_name
+          (word))))))
+
+================================================================================
+Marker after a command stays a comment
+================================================================================
+
+helper() { true # @test
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_definition
+    (word)
+    (compound_statement
+      (command
+        (command_name
+          (word)))
+      (comment))))
+
+================================================================================
+Unmarked functions and blocks
+================================================================================
+
+helper() { true; }
+{ # @test
+  true
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_definition
+    (word)
+    (compound_statement
+      (command
+        (command_name
+          (word)))))
+  (compound_statement
+    (comment)
+    (command
+      (command_name
+        (word)))))
+
+================================================================================
+Test disabled by commenting out its @test line
+================================================================================
+
+disabled() { # @test "Testname" {
+  true
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_definition
+    (word)
+    (compound_statement
+      (comment)
+      (command
+        (command_name
+          (word))))))

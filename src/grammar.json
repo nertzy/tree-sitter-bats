@@ -1881,6 +1881,15 @@
                   "name": "compound_statement"
                 },
                 {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_test_function_body"
+                  },
+                  "named": true,
+                  "value": "compound_statement"
+                },
+                {
                   "type": "SYMBOL",
                   "name": "subshell"
                 },
@@ -7031,6 +7040,55 @@
         }
       ]
     },
+    "_test_function_body": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "test_marker_comment"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_terminated_statement"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": -1,
+            "content": {
+              "type": "STRING",
+              "value": "}"
+            }
+          }
+        }
+      ]
+    },
+    "test_marker_comment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_test_marker_comment_start"
+        },
+        {
+          "type": "STRING",
+          "value": "@test"
+        }
+      ]
+    },
     "_test_body": {
       "type": "SEQ",
       "members": [
@@ -7328,6 +7386,10 @@
     {
       "type": "SYMBOL",
       "name": "__error_recovery"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_test_marker_comment_start"
     }
   ],
   "inline": [

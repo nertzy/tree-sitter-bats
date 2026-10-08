@@ -16,6 +16,19 @@ setup() {
 teardown_file() { :; }
 # <- function.builtin
 
+marked() { # @test
+# <- function
+#          ^ comment
+#            ^ keyword
+  true
+}
+
+unmarked() {
+  # @test
+  #   ^ comment
+  true
+}
+
 assert_ok() { [ "$status" -eq 0 ]; }
 # <- function
 #                 ^ variable.special
