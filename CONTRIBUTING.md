@@ -21,6 +21,15 @@ Edit `grammar.js`, never the generated `src/` files, and commit the regenerated 
 
 `queries/highlights.scm` gets assertions in `test/highlight/`, which `tree-sitter test` runs. Keep every node to one capture: when two patterns share a node type, split it with complementary predicates (`#match?` and `#not-match?` on the same regex). `cargo test` fails on any node captured twice, in `test/highlight/` and, after `script/fetch-examples`, in the example suites.
 
+CI also checks the queries with [ts_query_ls](https://github.com/ribru17/ts_query_ls) 3.16.0, which rejects node types, fields, and predicates the parser doesn't have, and enforces its formatting. Build the parser into the repository root first, since `.tsqueryrc.json` looks for it there, and run from a clone named `tree-sitter-bats`, which is how ts_query_ls tells which language the queries are for:
+
+```sh
+npx tree-sitter build
+ts_query_ls check --format queries/
+```
+
+`ts_query_ls format queries/` fixes the formatting.
+
 ### Example suites
 
 CI also parses the `.bats` files of the public Bats suites in `script/example-repos.txt`, each pinned to a commit, and accepts `ERROR` nodes only in the files listed in `script/known-failures.txt`. After a grammar change or a commit bump, regenerate the list and explain every added or removed file in the pull request:
