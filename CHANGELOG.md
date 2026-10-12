@@ -4,6 +4,10 @@ Notable changes to `tree-sitter-bats` are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- Added a CI check of `queries/` with [ts_query_ls](https://github.com/ribru17/ts_query_ls), which validates the patterns against the parser and enforces its formatting. `queries/highlights.scm` is reformatted to match, with no change to its captures.
+
 ## [0.1.0] - 2026-10-08
 
 ### Added
