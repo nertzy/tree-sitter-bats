@@ -76,6 +76,32 @@ ast-grep scan --inline-rules '{ id: test-names, language: bats, rule: { kind: te
 
 No two patterns capture the same node, so editors that prefer the first matching pattern (tree-sitter-highlight) and those that prefer the last (Zed) highlight the same way. The Rust binding test enforces this on `test/highlight/` and, once `script/fetch-examples` has fetched them, on the example suites; CI runs it on both. `tree-sitter test` runs the assertions in `test/highlight/`.
 
+## Neovim
+
+`queries/neovim/` holds highlight, fold, indent, injection, and locals queries for [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter). Each extends nvim-treesitter's Bash queries with Bats test blocks, hooks, helpers, and variables. Register the parser as a [custom language](https://github.com/nvim-treesitter/nvim-treesitter#adding-custom-languages):
+
+```lua
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'TSUpdate',
+  callback = function()
+    require('nvim-treesitter.parsers').bats = {
+      install_info = {
+        url = 'https://github.com/nertzy/tree-sitter-bats',
+        revision = 'v0.2.0',
+        queries = 'queries/neovim',
+      },
+      requires = { 'bash' },
+    }
+  end,
+})
+```
+
+Then run `:TSInstall bats`, which installs the `bash` parser too, and enable [highlighting, folds, and indentation](https://github.com/nvim-treesitter/nvim-treesitter#supported-features) for the `bats` filetype. Neovim 0.13 detects `.bats` files as `bats`; Neovim 0.12 detects them as `sh`, so add:
+
+```lua
+vim.filetype.add({ extension = { bats = 'bats' } })
+```
+
 ## Scope and limitations
 
 Bats test files are Bash scripts with extra syntax. This grammar parses them by extending tree-sitter-bash 0.25.1, so anything tree-sitter-bash misparses is misparsed here too unless this grammar works around it.

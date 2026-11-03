@@ -17,7 +17,7 @@ Pull requests that change packaging files, and manual runs of the workflow, buil
 
 ## Prepare a release
 
-1. Move the notes under `## [Unreleased]` in `CHANGELOG.md` into a new `## [<version>] - YYYY-MM-DD` section, leaving `## [Unreleased]` empty. Update the tag in the README's "Install" section.
+1. Move the notes under `## [Unreleased]` in `CHANGELOG.md` into a new `## [<version>] - YYYY-MM-DD` section, leaving `## [Unreleased]` empty. Update the tags in the README's "Install" and "Neovim" sections.
 2. Set the version everywhere:
 
    ```sh
