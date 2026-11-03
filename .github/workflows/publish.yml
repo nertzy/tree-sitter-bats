@@ -58,7 +58,7 @@ jobs:
       - uses: tree-sitter/setup-action/cli@faab9a23fa6195da0f1cf868219cc1e89f238d3d # v2
         with:
           # Keep in sync with the exact tree-sitter-cli version in package.json.
-          tree-sitter-ref: v0.27.0
+          tree-sitter-ref: v0.27.1
       - run: tree-sitter build --wasm --output tree-sitter-bats.wasm
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
