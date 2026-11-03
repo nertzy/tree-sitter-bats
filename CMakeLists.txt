@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-bats
-        VERSION "0.1.0"
+        VERSION "0.2.0"
         DESCRIPTION "Bats (Bash Automated Testing System) grammar for tree-sitter, extending tree-sitter-bash."
         HOMEPAGE_URL "https://github.com/nertzy/tree-sitter-bats"
         LANGUAGES C)

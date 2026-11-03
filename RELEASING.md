@@ -22,6 +22,7 @@ Pull requests that change packaging files, and manual runs of the workflow, buil
 
    ```sh
    tree-sitter version <version>
+   tree-sitter generate # src/parser.c embeds the version
    npm install --package-lock-only --ignore-scripts
    cargo update --workspace
    ```
