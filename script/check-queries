@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Check queries/ with ts_query_ls. The Neovim queries inherit nvim-treesitter's
+# Bash queries, so fetch those at a pinned commit for ts_query_ls to check too.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+nvim_treesitter_commit=0195cd62fa89950f34c0e0d648ea7897ab85d4d3
+
+workspace=$(mktemp -d)
+trap 'rm -rf "$workspace"' EXIT
+mkdir -p "$workspace/queries/bash"
+for query in queries/neovim/*.scm; do
+  curl -fsSL -o "$workspace/queries/bash/${query##*/}" \
+    "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/$nvim_treesitter_commit/runtime/queries/bash/${query##*/}"
+done
+
+ts_query_ls check --format --workspace "$workspace" "$@" queries/

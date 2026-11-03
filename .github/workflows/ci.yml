@@ -84,7 +84,7 @@ jobs:
           echo "$SHA256  $ARCHIVE" | sha256sum -c -
           tar -xzf "$ARCHIVE"
           echo "$RUNNER_TEMP/ts_query_ls" >> "$GITHUB_PATH"
-      - run: ts_query_ls check --format queries/
+      - run: script/check-queries
 
   examples:
     name: Parse example Bats suites
