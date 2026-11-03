@@ -126,7 +126,7 @@ CI parses the `.bats` files of several public Bats suites at pinned commits. `sc
 
 ## Development
 
-Requires the tree-sitter CLI 0.27.0 (pinned in `package.json` and CI), Node.js, and a C compiler. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Requires the tree-sitter CLI 0.27.1 (pinned in `package.json` and CI), Node.js, and a C compiler. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## References
 

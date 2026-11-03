@@ -51,7 +51,7 @@ jobs:
       - uses: tree-sitter/setup-action/cli@faab9a23fa6195da0f1cf868219cc1e89f238d3d # v2
         with:
           # Keep in sync with the exact tree-sitter-cli version in package.json.
-          tree-sitter-ref: v0.27.0
+          tree-sitter-ref: v0.27.1
       - uses: tree-sitter/parser-test-action@05f6ce7c7e54603c45cd87ed926725dc870bcc63 # v3
         with:
           generate: true
@@ -68,7 +68,7 @@ jobs:
       - uses: tree-sitter/setup-action/cli@faab9a23fa6195da0f1cf868219cc1e89f238d3d # v2
         with:
           # Keep in sync with the exact tree-sitter-cli version in package.json.
-          tree-sitter-ref: v0.27.0
+          tree-sitter-ref: v0.27.1
       # ts_query_ls checks the queries against the parser built into the repo root.
       - run: tree-sitter build
       - name: Install ts_query_ls
@@ -95,7 +95,7 @@ jobs:
       - uses: tree-sitter/setup-action/cli@faab9a23fa6195da0f1cf868219cc1e89f238d3d # v2
         with:
           # Keep in sync with the exact tree-sitter-cli version in package.json.
-          tree-sitter-ref: v0.27.0
+          tree-sitter-ref: v0.27.1
       - run: script/fetch-examples
       # The Rust binding test checks highlight captures on the fetched suites.
       - run: cargo test test_highlights_capture_each_node_once

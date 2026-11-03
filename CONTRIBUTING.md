@@ -4,7 +4,7 @@ Thanks for helping improve tree-sitter-bats.
 
 ## Development
 
-You need the tree-sitter CLI 0.27.0, Node.js, and a C compiler. The CLI version is pinned exactly in `package.json` and in CI, so every contributor regenerates `src/` the same way. The npm `tree-sitter-cli` package provides that version through `npx tree-sitter`.
+You need the tree-sitter CLI 0.27.1, Node.js, and a C compiler. The CLI version is pinned exactly in `package.json` and in CI, so every contributor regenerates `src/` the same way. The npm `tree-sitter-cli` package provides that version through `npx tree-sitter`.
 
 ```sh
 npm ci
