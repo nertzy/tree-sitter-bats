@@ -16,12 +16,12 @@ cargo add tree-sitter-bats tree-sitter   # Rust
 pip install tree-sitter-bats tree-sitter # Python
 ```
 
-Go and Swift users depend on a release tag, such as `v0.1.0`. Each [GitHub Release](https://github.com/nertzy/tree-sitter-bats/releases) attaches a Wasm build, `tree-sitter-bats.wasm`.
+Go and Swift users depend on a release tag, such as `v0.2.0`. Each [GitHub Release](https://github.com/nertzy/tree-sitter-bats/releases) attaches a Wasm build, `tree-sitter-bats.wasm`.
 
 Tools that load a compiled grammar, such as ast-grep, need a build from source:
 
 ```sh
-git clone --branch v0.1.0 https://github.com/nertzy/tree-sitter-bats
+git clone --branch v0.2.0 https://github.com/nertzy/tree-sitter-bats
 cd tree-sitter-bats
 tree-sitter build --output bats.dylib # bats.so on Linux
 ```

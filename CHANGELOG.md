@@ -4,6 +4,8 @@ Notable changes to `tree-sitter-bats` are documented here.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-03
+
 ### Added
 
 - Added `queries/neovim/` with highlight, fold, indent, injection, and locals queries for nvim-treesitter, each extending its Bash queries, and a README section on using the parser in Neovim.
