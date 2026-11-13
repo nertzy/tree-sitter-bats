@@ -38,14 +38,13 @@
   "devDependencies": {
     "eslint": "^9.39.5",
     "eslint-config-treesitter": "^1.0.2",
-    "markdownlint-cli2": "^0.24.0",
+    "markdownlint-cli2": "^0.24.1",
     "prebuildify": "^6.0.1",
     "tree-sitter": "^0.25.0",
     "tree-sitter-cli": "0.27.1"
   },
   "overrides": {
-    "katex": "0.18.2",
-    "re2js": "2.8.7"
+    "katex": "0.18.2"
   },
   "peerDependencies": {
     "tree-sitter": "^0.25.0"
